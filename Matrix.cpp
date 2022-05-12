@@ -90,9 +90,12 @@ Matrix& Matrix::operator*=(const Matrix& m) {
 Matrix Matrix :: operator*(const Matrix& m) const {
 	if (size[1] != m.size[0]) return *this;
 	Matrix result(size[0], m.size[1]);
-	result *= m;
-	result *= *this;
-	
+	for (int i = 0; i < result.size[0]; i++) {
+		for (int k = 0; k < size[1]; k++) {
+			for (int j = 0; j < result.size[1]; j++)
+				result[i][j] += (data[i][k] * m[k][j]);
+		}
+	}
 	return result;
 
 }
