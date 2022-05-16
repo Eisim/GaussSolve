@@ -12,10 +12,11 @@ private:
 	std::vector<Vector> vsolve;
 	std::vector<int> mainelems;
 	std::vector<int> freeelems;
-	std::vector<Vector> solve(const Matrix& A, const Vector& b);
+	//std::vector<Vector> solve(const Matrix& A, const Vector& b);
 	bool havesolve;
 
 public:
+	std::vector<Vector> solve(const Matrix& A, const Vector& b);
 	int getSize() { return size; }
 	bool checkSolvability() { return havesolve; }
 	std::vector<int> getMainElems() { return mainelems; }
