@@ -1,20 +1,10 @@
 #include<iostream>
 #include"Matrix.h"
 #include"Vector.h"
-#include"GaussSolve.h"
+#include"GaussSolver.h"
 int main() {
 	//size A:3 5   0 2 1 -1 1 1 1 3 -2 3 3 1 8 -4 0 3 1 2
 
-	/*
-	size A:5 5
-9 7 8 8 8
-8 8 8 8 8
-5 5 5 5 5
-1 1 9 1 2
-9 8 4 7 8
-1 9 2 -1 -1
-
-*/
 
 	int sizeA1, sizeA2;
 	
@@ -24,12 +14,11 @@ int main() {
 	Matrix A(sizeA1, sizeA2);
 	Vector b(sizeA1);
 	std::cout << "enter elements:\n";
-	//A.randomFill();
-	//b.randomfill();
-	//std::cout << A << b;
-	std::cin >> A >> b;
-
-	GaussSolve slv(A,b);
+	A.randomFill();
+	b.randomfill();
+	std::cout << A << b;
+	//std::cin >> A >> b;
+	GaussSolver slv(A,b);
 
 	test(A, b);
 
