@@ -16,8 +16,8 @@ private:
 	bool havesolve;
 
 public:
-	std::vector<Vector> solve(const Matrix& A, const Vector& b);
 	int getSize() { return size; }
+	std::vector<Vector> solve(const Matrix& A, const Vector& b);
 	bool checkSolvability() { return havesolve; }
 	std::vector<int> getMainElems() { return mainelems; }
 	std::vector<int> getFreeElems() { return freeelems; }

@@ -3,6 +3,7 @@
 #include"Vector.h"
 #include"GaussSolver.h"
 int main() {
+	std::srand(std::time(0));
 	//size A:3 5   0 2 1 -1 1 1 1 3 -2 3 3 1 8 -4 0 3 1 2
 
 
@@ -14,13 +15,13 @@ int main() {
 	Matrix A(sizeA1, sizeA2);
 	Vector b(sizeA1);
 	std::cout << "enter elements:\n";
-	A.randomFill();
-	b.randomfill();
-	std::cout << A << b;
-	//std::cin >> A >> b;
-	GaussSolver slv(A,b);
-
-	test(A, b);
+	//A.randomFill();
+	//b.randomfill();
+	//std::cout << A << b;
+	std::cin >> A >> b;
+	GaussSolver slv;
+	std::vector<Vector> solve = slv.solve(A, b);
+	//test(A, b);
 
 	std::cout <<"\n" << slv;
 

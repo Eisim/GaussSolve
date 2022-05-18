@@ -159,6 +159,8 @@ void Matrix::swap(int i, int j) {
 	data[j] = tmp;
 }
 
+
+
 std::istream& operator>>(std::istream& in, Matrix& m) {
 	for (int i = 0; i < m.size[0]; i++) {
 		for (int j = 0; j < m.size[1]; j++) {

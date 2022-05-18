@@ -192,6 +192,7 @@ std::istream& operator>>(std::istream& in, Vector& v) {
 }
 
 void Vector::swap(int i, int j) {
+	if (i == j) return;
 	double tmp = data[i];
 	data[i] = data[j];
 	data[j] = tmp;

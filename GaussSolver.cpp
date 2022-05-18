@@ -22,7 +22,7 @@ int min(int a, int b) { return  (a <= b) ? a : b; }
 
 bool elemComporisonLess(Vector v,double num) {
 	for (int i = 0; i < v.getSize(); i++) {
-		if (v[i] >= num) return false;
+		if (myabs(v[i]) >= num) return false;
 	}
 	return true;
 }
@@ -40,19 +40,21 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	
 
 	for (int i = 0; i < minsize; i++) {
-		if (copyA[i] == 0 ) continue;
+		if (elemComporisonLess(copyA[i], accuracy) && !elemComporisonLess(copyb[i], accuracy)) {havesolve = false; return this->vsolve; }
+		if (elemComporisonLess(copyA[i], accuracy) && elemComporisonLess(copyb[i],accuracy)) continue;
+		
 		//swap to make the diagonal element main
-		if (myabs(A[i][i]) <= accuracy)
-		{
-			for (int j = i + 1; j < A.size[0]; j++) {
-				if (A[j][i] != 0) {
-					copyA.swap(i, j);
-					copyb.swap(i, j);
-					break;
-				}
+		double max = A[i][i];
+		int indexM = i;
+		for (int j = i + 1; j < A.size[0]; j++) {
+			if (!elemComporisonLess(A[j][i],accuracy) && A[j][i] > max) {
+				max = A[j][i];
+				indexM = j;
 			}
 		}
-		
+		copyA.swap(i, indexM);
+		copyb.swap(i, indexM);
+		std::cout << copyA;
 		
 		mainelem = copyA[i][i];
 		MEindex[0] = i, MEindex[1] = i;
