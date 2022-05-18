@@ -22,7 +22,6 @@ int main() {
  	GaussSolver slv;
 	std::vector<Vector> solve = slv.solve(A, b);
 	test(A, b);
-
 	std::cout <<"\n" << slv;
 
 	return 0;
