@@ -3,7 +3,7 @@
 #include"Vector.h"
 #include"GaussSolver.h"
 int main() {
-	std::srand(std::time(0));
+
 	//size A:3 5   0 2 1 -1 1 1 1 3 -2 3 3 1 8 -4 0 3 1 2
 
 
@@ -19,7 +19,7 @@ int main() {
 	//b.randomfill();
 	//std::cout << A << b;
 	std::cin >> A >> b;
-	GaussSolver slv;
+ 	GaussSolver slv;
 	std::vector<Vector> solve = slv.solve(A, b);
 	//test(A, b);
 

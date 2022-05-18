@@ -20,6 +20,18 @@ std::vector<int> takeFreeElems(const std::vector<int> mainelems, int sizeA) {
 double myabs(double a) { return (a > 0) ? a : -a; }
 int min(int a, int b) { return  (a <= b) ? a : b; }
 
+bool comparisonWithConst(Matrix& m, const int num) {
+	for (int i = 0; i < m.size[0]; i++)
+		for (int j = 0; j < m.size[1]; j++)
+			if (m[i][j] != num) return false;
+	return true;
+}
+bool comparisonWithConst(Vector& v, const int num) {
+	for (int i = 0; i < v.getSize(); i++)
+			if (v[i] != num) return false;
+	return true;
+}
+
 bool elemComporisonLess(Vector v,double num) {
 	for (int i = 0; i < v.getSize(); i++) {
 		if (myabs(v[i]) >= num) return false;
@@ -40,6 +52,8 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	
 
 	for (int i = 0; i < minsize; i++) {
+		if (comparisonWithConst(copyA, 0) && comparisonWithConst(copyb, 0)) { havesolve = false; return this->vsolve; }
+		//WHY CANT USE bool TMP=elemComporisonLess(copyA[i], accuracy);?!?!?!?!?
 		if (elemComporisonLess(copyA[i], accuracy) && !elemComporisonLess(copyb[i], accuracy)) {havesolve = false; return this->vsolve; }
 		if (elemComporisonLess(copyA[i], accuracy) && elemComporisonLess(copyb[i],accuracy)) continue;
 		
@@ -54,7 +68,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		}
 		copyA.swap(i, indexM);
 		copyb.swap(i, indexM);
-		std::cout << copyA;
+		
 		
 		mainelem = copyA[i][i];
 		MEindex[0] = i, MEindex[1] = i;

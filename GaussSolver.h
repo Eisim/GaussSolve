@@ -12,7 +12,7 @@ private:
 	std::vector<Vector> vsolve;
 	std::vector<int> mainelems;
 	std::vector<int> freeelems;
-	//std::vector<Vector> solve(const Matrix& A, const Vector& b);
+
 	bool havesolve;
 
 public:
