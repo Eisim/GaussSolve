@@ -156,7 +156,7 @@ int Vector::getSize() const {
 }
 
 void Vector::randomfill() {
-	std::srand(std::time(0));
+	
 	for (int i = 0; i < this->n; i++)
 		this->data[i] = rand() % 100;
 

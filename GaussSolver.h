@@ -23,7 +23,7 @@ public:
 	std::vector<int> getFreeElems() { return freeelems; }
 	std::vector<Vector> getSolve() { return vsolve; }
 	double accuracy;
-	GaussSolver() :havesolve(true),freeelems(0),size(0),vsolve(0),mainelems(0),accuracy(1e-15) {};
+	GaussSolver() :havesolve(true),freeelems(0),size(0),vsolve(0),mainelems(0),accuracy(1e-10) {};
 	GaussSolver(const Matrix& A, const Vector& b) :GaussSolver() { this->solve(A, b); size = A.size[1]; freeelems = takeFreeElems(mainelems, size);}
 
 	

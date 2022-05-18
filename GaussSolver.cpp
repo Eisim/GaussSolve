@@ -3,7 +3,7 @@
 #include<vector>
 #include"Vector.h"
 #include<cmath>
-#include<iomanip>
+
 std::vector<int> takeFreeElems(const std::vector<int> mainelems, int sizeA) {
 	bool isinmain;
 	std::vector<int> a;
@@ -32,13 +32,12 @@ bool comparisonWithConst(Vector& v, const int num) {
 	return true;
 }
 
-bool elemComporisonLess(Vector v,double num) {
+bool elemComporisonLess(Vector& v, double num) {
 	for (int i = 0; i < v.getSize(); i++) {
 		if (myabs(v[i]) >= num) return false;
 	}
 	return true;
 }
-
 
 std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	if (A.size[0] != b.getSize()) { havesolve = false; return this->vsolve; }
@@ -49,26 +48,24 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	int minsize = min(A.size[0],A.size[1]);
 	double mainelem;
 	int MEindex[2];
-	
 
 	for (int i = 0; i < minsize; i++) {
 		if (comparisonWithConst(copyA, 0) && comparisonWithConst(copyb, 0)) { havesolve = false; return this->vsolve; }
 		//WHY CANT USE bool TMP=elemComporisonLess(copyA[i], accuracy);?!?!?!?!?
-		if (elemComporisonLess(copyA[i], accuracy) && !elemComporisonLess(copyb[i], accuracy)) {havesolve = false; return this->vsolve; }
-		if (elemComporisonLess(copyA[i], accuracy) && elemComporisonLess(copyb[i],accuracy)) continue;
+		if (elemComporisonLess(copyA[i], accuracy) && !elemComporisonLess(copyb, accuracy)) {havesolve = false; return this->vsolve; }
+		if (elemComporisonLess(copyA[i], accuracy) && elemComporisonLess(copyb,accuracy)) continue;
 		
 		//swap to make the diagonal element main
 		double max = A[i][i];
 		int indexM = i;
 		for (int j = i + 1; j < A.size[0]; j++) {
-			if (!elemComporisonLess(A[j][i],accuracy) && A[j][i] > max) {
-				max = A[j][i];
+			if (A[j][i]>=accuracy && myabs(A[j][i]) > max) {
+				max = myabs(A[j][i]);
 				indexM = j;
 			}
 		}
 		copyA.swap(i, indexM);
 		copyb.swap(i, indexM);
-		
 		
 		mainelem = copyA[i][i];
 		MEindex[0] = i, MEindex[1] = i;
@@ -79,10 +76,8 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 					MEindex[0]=i,MEindex[1]=j;
 					break;
 				}
-
 		}
 		mainelems.push_back(MEindex[1]);
-
 		copyA[i]/= mainelem;
 		copyb[i] /= mainelem;
 
@@ -94,9 +89,6 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 				
 			}
 		}
-		
-		//std::cout << copyA<<copyb<<"\n";
-
 		//check solvability
 		for (int c = 0; c < A.size[0]; c++) {
 			if (copyA[c]==0 && copyb[c]!=0){//(elemComporisonLess(copyA[c], accuracy) && myabs(copyb[c]) > accuracy) {
@@ -106,8 +98,6 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		}
 	}
 
-
-	
 	std::vector<int>freeelems = takeFreeElems(mainelems, A.size[1]);
 	//take result
 	Vector solve(mainelems.size());
@@ -119,10 +109,8 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		for (int i = 0; i < mainelems.size(); i++) {
 			solve[i] = -copyA[i][freeelems[j]];
 		}
-		
 		vsolve.push_back(solve);
 	}
-	
 	return this->vsolve;
 	}
 
@@ -145,7 +133,6 @@ std::ostream& operator<<(std::ostream& out, const GaussSolver& gs) {
 		out <<"\n" << "x" << gs.freeelems[i] << " = " << "t" << (i+1);
 	}
 
-
 	return out;
 }
 
@@ -154,12 +141,10 @@ double getNorm(const Matrix& m) {
 	double max = 0;
 	for (int i = 0; i < m.size[0]; i++){
 	for (int j = 0; j < m.size[1]; j++) 
-		
 			norm += myabs(m[i][j]);
 		if (max < norm) max = norm;
 		norm = 0;
 	}
-	
 	return max;
 }
 
@@ -172,15 +157,11 @@ void test( Matrix& A,Vector& b) {
 	for (int i = 0; i < tmp.getMainElems().size(); i++) {
 			x[tmp.getMainElems()[i]][0] = tmp.getSolve()[0][i];
 	}
-
-
 	Matrix Ax = A * x;
 	
 	double normAx = getNorm(Ax);
 	double normb = getNorm(Mb);
 	std::cout <<"norm Ax:" << normAx << "\nnorm b:" << normb << "\n";
 	std::cout <<"norm difference:" << myabs(normAx - normb) << "\n";
-
 	std::cout <<"test " << ((myabs(normAx - normb)<tmp.accuracy) ? "completed" : "failed");
-
 }
