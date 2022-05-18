@@ -51,9 +51,10 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 
 	for (int i = 0; i < minsize; i++) {
 		if (comparisonWithConst(copyA, 0) && comparisonWithConst(copyb, 0)) { havesolve = false; return this->vsolve; }
-		//WHY CANT USE bool TMP=elemComporisonLess(copyA[i], accuracy);?!?!?!?!?
-		if (elemComporisonLess(copyA[i], accuracy) && !elemComporisonLess(copyb, accuracy)) {havesolve = false; return this->vsolve; }
-		if (elemComporisonLess(copyA[i], accuracy) && elemComporisonLess(copyb,accuracy)) continue;
+		bool TMP1 = elemComporisonLess(copyA[i], accuracy);
+		bool TMP2 = elemComporisonLess(copyb, accuracy);
+		if (TMP1 && !TMP2) {havesolve = false; return this->vsolve; }
+		if (TMP1 && TMP2) continue;
 		
 		//swap to make the diagonal element main
 		double max = A[i][i];
