@@ -98,7 +98,6 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 				return this->vsolve;
 			}
 		}
-		std::cout << copyA<<copyb;
 	}
 
 	std::vector<int>freeelems = takeFreeElems(mainelems, A.size[1]);
@@ -159,11 +158,10 @@ void test( Matrix& A,Vector& b) {
 	Matrix Mb(b.getSize(),1);
 	for (int i = 0; i < b.getSize(); i++) Mb[i][0] = b[i];
 	Matrix x(A.size[1],1);
-	for (int i = 0; i < tmp.getMainElems().size(); i++) {
-			x[tmp.getMainElems()[i]][0] = tmp.getSolve()[0][i];
+	for (int i = 0; i < tmp.getSolve()[0].getSize(); i++) {
+			x[i][0] = tmp.getSolve()[0][i];
 	}
 	Matrix Ax = A * x;
-	
 	double normAx = getNorm(Ax);
 	double normb = getNorm(Mb);
 	std::cout <<"norm Ax:" << normAx << "\nnorm b:" << normb << "\n";
