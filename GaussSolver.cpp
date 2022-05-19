@@ -44,6 +44,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	
 	Matrix copyA = A;
 	Vector copyb = b;
+	this->size = copyA.size[1];
 	bool swaped;
 	int minsize = min(A.size[0],A.size[1]);
 	double mainelem;
@@ -78,6 +79,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 					break;
 				}
 		}
+		
 		mainelems.push_back(MEindex[1]);
 		copyA[i]/= mainelem;
 		copyb[i] /= mainelem;
@@ -100,16 +102,21 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	}
 
 	std::vector<int>freeelems = takeFreeElems(mainelems, A.size[1]);
+
 	//take result
-	Vector solve(mainelems.size());
+	Vector solve(A.size[1]);
 	for (int i = 0; i < mainelems.size(); i++) {
-		solve[i] = copyb[i];
+		solve[mainelems[i]] = copyb[i];
 	}
 	this->vsolve.push_back(solve);
+
 	for (int j = 0; j < freeelems.size(); j++) {
+		solve = A.size[1];
 		for (int i = 0; i < mainelems.size(); i++) {
-			solve[i] = -copyA[i][freeelems[j]];
+			solve[mainelems[i]] = -copyA[i][freeelems[j]];
+			if(myabs(solve[mainelems[i]])<accuracy) solve[mainelems[i]]=0;
 		}
+		solve[freeelems[j]] = 1;
 		vsolve.push_back(solve);
 	}
 	return this->vsolve;
@@ -118,21 +125,18 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 std::ostream& operator<<(std::ostream& out, const GaussSolver& gs) {
 	if (gs.vsolve.size() == 0||!(gs.havesolve)) return out<<"No solution.";
 	out << "(";
-	for (int i = 0; i < gs.mainelems.size(); i++) {
-		out << "x" << gs.mainelems[i];
-		if(i!=(gs.mainelems.size()-1)) out<<",";
+	for (int i = 0; i < gs.size; i++) {
+		out << "x" << (i+1);
+		if(i!=(gs.size-1)) out<<",";
 	}
 	out << ")=";
 
 	for (int i = 0; i < gs.vsolve.size(); i++) {
 		out << gs.vsolve[i];
-		if (i != 0) out<<"t" << i;
+		if (i != 0) out<<"t" << (i+1);
 		if (i != (gs.vsolve.size() - 1)) out << "+";
 	}
 	out << "\n";
-	for (int i = 0; i < gs.freeelems.size(); i++) {
-		out <<"\n" << "x" << gs.freeelems[i] << " = " << "t" << (i+1);
-	}
 
 	return out;
 }
