@@ -17,8 +17,8 @@ int main() {
 	std::cout << "enter elements:\n";
 	A.randomFill();
 	b.randomfill();
-	std::cout << A << b;
-	//std::cin >> A >> b;
+	//std::cout << A << b;
+	std::cin >> A >> b;
  	GaussSolver slv;
 	std::vector<Vector> solve = slv.solve(A, b);
 	test(A, b);

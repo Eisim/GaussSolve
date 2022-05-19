@@ -49,13 +49,12 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	int minsize = min(A.size[0],A.size[1]);
 	double mainelem;
 	int MEindex[2];
-
+	std::vector<int> mainelemsrow;
 	for (int i = 0; i < minsize; i++) {
 		if (comparisonWithConst(copyA, 0) && comparisonWithConst(copyb, 0)) { havesolve = false; return this->vsolve; }
 		bool TMP1 = elemComporisonLess(copyA[i], accuracy);
-		bool TMP2 = elemComporisonLess(copyb, accuracy);
-		if (TMP1 && !TMP2) {havesolve = false; return this->vsolve; }
-		if (TMP1 && TMP2) continue;
+		if (TMP1 && !myabs(copyb[i]) < accuracy) {havesolve = false; return this->vsolve; }
+		if (TMP1 && myabs(copyb[i])<accuracy) continue;
 		
 		//swap to make the diagonal element main
 		double max = A[i][i];
@@ -83,7 +82,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		mainelems.push_back(MEindex[1]);
 		copyA[i]/= mainelem;
 		copyb[i] /= mainelem;
-
+		mainelemsrow.push_back(MEindex[0]);
 		//change rows
 		for (int j = 0; j < A.size[0]; j++) {
 			if (j != MEindex[0]) {
@@ -99,14 +98,15 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 				return this->vsolve;
 			}
 		}
+		std::cout << copyA<<copyb;
 	}
 
 	std::vector<int>freeelems = takeFreeElems(mainelems, A.size[1]);
-
+	
 	//take result
 	Vector solve(A.size[1]);
-	for (int i = 0; i < mainelems.size(); i++) {
-		solve[mainelems[i]] = copyb[i];
+	for (int i = 0; i < mainelemsrow.size(); i++) {
+		solve[mainelems[i]] = copyb[mainelemsrow[i]];
 	}
 	this->vsolve.push_back(solve);
 
