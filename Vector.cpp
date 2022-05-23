@@ -23,6 +23,7 @@ Vector::Vector(const Vector& v) {
 
 
 Vector::~Vector() {
+
 	delete[] data;
 
 }

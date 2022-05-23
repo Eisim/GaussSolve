@@ -38,12 +38,22 @@ bool elemComporisonLess(Vector& v, double num) {
 	}
 	return true;
 }
-
+void doZeroRowLast(Matrix& A,Vector& b) {
+	for (int i = 0; i < A.size[0]; i++) {
+		for (int j = i+1; j < A.size[0]; j++)
+			if (A[i] == 0 && !(A[j] == 0)) {
+				A.swap(i, j);
+				b.swap(i, j);
+			}
+		
+	}
+}
 std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	if (A.size[0] != b.getSize()) { havesolve = false; return this->vsolve; }
 	
 	Matrix copyA = A;
 	Vector copyb = b;
+	doZeroRowLast(copyA,copyb);
 	this->size = copyA.size[1];
 	bool swaped;
 	int minsize = min(A.size[0],A.size[1]);
@@ -55,24 +65,26 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		bool TMP1 = elemComporisonLess(copyA[i], accuracy);
 		if (TMP1 && !myabs(copyb[i]) < accuracy) {havesolve = false; return this->vsolve; }
 		if (TMP1 && myabs(copyb[i])<accuracy) continue;
-		
 		//swap to make the diagonal element main
-		double max = A[i][i];
+		double max = myabs(copyA[i][i]);
 		int indexM = i;
-		for (int j = i + 1; j < A.size[0]; j++) {
-			if (A[j][i]>=accuracy && myabs(A[j][i]) > max) {
-				max = myabs(A[j][i]);
+		
+		for (int j = i + 1; j < copyA.size[0]; j++) {
+			if (myabs(copyA[j][i])>=accuracy && myabs(copyA[j][i]) > max) {
+				max = myabs(copyA[j][i]);
 				indexM = j;
 			}
 		}
+
 		copyA.swap(i, indexM);
 		copyb.swap(i, indexM);
 		
 		mainelem = copyA[i][i];
 		MEindex[0] = i, MEindex[1] = i;
 		if (myabs(mainelem) <= accuracy) {
-			for (int j = 0; j < A.size[1]; j++)
+			for (int j = 0; j < copyA.size[1]; j++)
 				if (myabs(copyA[i][j]) > accuracy) {
+
 					mainelem = copyA[i][j];
 					MEindex[0]=i,MEindex[1]=j;
 					break;
@@ -100,10 +112,15 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 		}
 	}
 
+
+
 	std::vector<int>freeelems = takeFreeElems(mainelems, A.size[1]);
 	
+
+
+
 	//take result
-	Vector solve(A.size[1]);
+	Vector solve(copyA.size[1]);
 	for (int i = 0; i < mainelemsrow.size(); i++) {
 		solve[mainelems[i]] = copyb[mainelemsrow[i]];
 	}
@@ -132,7 +149,7 @@ std::ostream& operator<<(std::ostream& out, const GaussSolver& gs) {
 
 	for (int i = 0; i < gs.vsolve.size(); i++) {
 		out << gs.vsolve[i];
-		if (i != 0) out<<"t" << (i+1);
+		if (i != 0) out<<"t" << (i);
 		if (i != (gs.vsolve.size() - 1)) out << "+";
 	}
 	out << "\n";

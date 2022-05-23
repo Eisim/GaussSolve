@@ -2,6 +2,7 @@
 #include"Vector.h"
 #include<iostream>
 
+
 Matrix::Matrix() {
 	size[0] = 0;
 	size[1] = 0;

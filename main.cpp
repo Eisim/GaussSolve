@@ -5,8 +5,18 @@
 int main() {
 
 	//size A:3 5   0 2 1 -1 1 1 1 3 -2 3 3 1 8 -4 0 3 1 2
+	
+	/*size A : 7 5
+	0 0 0 0 0
+	0 1 0 -3 0
+	0 0 -8 0 0
+	0 0 0 0 0
+	0 0 0 0 0
+	0 0 0 0 5
+	0 0 0 0 0
 
-
+	0 4 -4 0 0 1 0
+	*/
 	int sizeA1, sizeA2;
 	
 	std::cout << "size A:";
@@ -21,9 +31,12 @@ int main() {
 	std::cin >> A >> b;
  	GaussSolver slv;
 	std::vector<Vector> solve = slv.solve(A, b);
-	test(A, b);
+	
+	std::cout << "\n" << slv;
+
+	//test(A, b);
 	//std::cout << slv.getSolve()[0];
-	std::cout <<"\n" << slv;
+	
 
 	return 0;
 }

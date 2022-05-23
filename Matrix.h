@@ -29,6 +29,7 @@ public:
 	void randomFill();
 	void swap(int i, int j);
 
+
 	friend std::ostream& operator<<(std::ostream& out, const Matrix& m);
 	friend std::istream& operator>>(std::istream& in, Matrix& m);
 
