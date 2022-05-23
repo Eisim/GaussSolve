@@ -1,0 +1,11 @@
+﻿  GaussSolver.cpp
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(12,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(56,15): warning C4804: <: небезопасное использование типа "bool" в операции
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(107,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(112,20): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(114,21): warning C4018: <: несоответствие типов со знаком и без знака
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(48,7): warning C4101: swaped: неиспользованная локальная переменная
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(133,20): warning C4018: <: несоответствие типов со знаком и без знака
+  main.cpp
+  Создание кода...
+  GaussSolve.vcxproj -> C:\Users\Eisim\source\repos\GaussSolve\Debug\GaussSolve.exe

@@ -1,0 +1,9 @@
+﻿  GaussSolver.cpp
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(66,15): warning C4804: <: небезопасное использование типа "bool" в операции
+C:\Users\Eisim\source\repos\GaussSolve\GaussSolve\GaussSolver.cpp(58,7): warning C4101: swaped: неиспользованная локальная переменная
+  Создание кода
+  10 of 217 functions ( 4.6%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    9 functions had inline decision re-evaluated but remain unchanged
+  Создание кода завершено
+  GaussSolve.vcxproj -> C:\Users\Eisim\source\repos\GaussSolve\x64\Release\GaussSolve.exe
