@@ -110,7 +110,6 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 				return this->vsolve;
 			}
 		}
-		std::cout << copyA;
 	}
 
 
