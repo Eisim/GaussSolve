@@ -16,7 +16,18 @@ int main() {
 	0 0 0 0 0
 
 	0 4 -4 0 0 1 0
+	
+	size A:3 3
+
+	-1 5 9
+	3 -5 0
+	2 0 9
+	-1 2 1
+	
 	*/
+
+
+
 	int sizeA1, sizeA2;
 	
 	std::cout << "size A:";
@@ -27,7 +38,7 @@ int main() {
 	std::cout << "enter elements:\n";
 	//A.randomFill();
 	//b.randomfill();
-	//std::cout << A << b;
+	std::cout << A << b;
 	std::cin >> A >> b;
  	GaussSolver slv;
 	std::vector<Vector> solve = slv.solve(A, b);

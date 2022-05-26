@@ -61,9 +61,9 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 	int MEindex[2];
 	std::vector<int> mainelemsrow;
 	for (int i = 0; i < minsize; i++) {
-		if (comparisonWithConst(copyA, 0) && comparisonWithConst(copyb, 0)) { havesolve = false; return this->vsolve; }
+		
 		bool TMP1 = elemComporisonLess(copyA[i], accuracy);
-		if (TMP1 && !myabs(copyb[i]) < accuracy) {havesolve = false; return this->vsolve; }
+		if (TMP1 && myabs(copyb[i]) > accuracy) {havesolve = false; return this->vsolve; }
 		if (TMP1 && myabs(copyb[i])<accuracy) continue;
 		//swap to make the diagonal element main
 		double max = myabs(copyA[i][i]);
@@ -110,6 +110,7 @@ std::vector<Vector> GaussSolver::solve(const Matrix&A,const Vector& b) {
 				return this->vsolve;
 			}
 		}
+		std::cout << copyA;
 	}
 
 
